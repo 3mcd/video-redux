@@ -1,20 +1,24 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-interface VideoProps {
+export type Props = {
   autoPlay?: boolean;
   controls?: boolean;
-  crossOrigin?: 'anonymous' | 'use-credentials';
+  crossOrigin?: string;
   height?: number | string;
   loop?: boolean;
   muted?: boolean;
-  preload?: 'none' | 'metadata' | 'auto' | '';
+  preload?: string;
   poster?: string;
   src?: string;
   width?: number | string;
   playsInline?: boolean;
-}
+};
 
-const Video: React.SFC<VideoProps> = props => <video {...props} />;
+export type Ref = HTMLVideoElement;
+
+const Video = forwardRef<Ref, Props>((props, ref) => (
+  <video {...props} ref={ref} />
+));
 
 Video.defaultProps = {
   autoPlay: false,
@@ -23,7 +27,7 @@ Video.defaultProps = {
   height: undefined,
   loop: false,
   muted: false,
-  preload: 'metadata',
+  preload: undefined,
   poster: undefined,
   src: undefined,
   width: undefined,
