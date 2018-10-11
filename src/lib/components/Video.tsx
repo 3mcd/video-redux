@@ -34,4 +34,6 @@ Video.defaultProps = {
   playsInline: false,
 };
 
+Video.displayName = 'Video';
+
 export default Video;

@@ -23,10 +23,10 @@ export default connect(
   undefined,
   dispatch => ({
     onPlayClick: () => {
-      dispatch(play());
+      dispatch(play('test'));
     },
     onPauseClick: () => {
-      dispatch(pause());
+      dispatch(pause('test'));
     },
   }),
 )(Controls);
