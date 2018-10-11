@@ -1,15 +1,15 @@
 import { Reducer } from 'redux';
 
-import { ON_PLAY, ON_PAUSE, INIT, DESTROY, Action } from './actions';
+import { ON_PLAY, ON_PAUSE, ON_TIME_UPDATE, INIT, DESTROY, Action } from './actions';
 
-export type VideoState = { paused: boolean };
+export type VideoState = { currentTime: number, paused: boolean };
 
 export type State = {
   [id: string]: VideoState;
 };
 
 export const INITIAL_STATE: State = {};
-export const INITIAL_VIDEO_STATE: VideoState = { paused: true };
+export const INITIAL_VIDEO_STATE: VideoState = { currentTime: 0, paused: true };
 
 const reducer: Reducer<State, Action> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -37,6 +37,14 @@ const reducer: Reducer<State, Action> = (state = INITIAL_STATE, action) => {
         [action.meta.id]: {
           ...state[action.meta.id],
           paused: true,
+        },
+      };
+    case ON_TIME_UPDATE:
+      return {
+        ...state,
+        [action.meta.id]: {
+          ...state[action.meta.id],
+          currentTime: action.payload.currentTime
         },
       };
     default:

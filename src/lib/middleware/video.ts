@@ -4,10 +4,12 @@ import {
   Action,
   PLAY,
   PAUSE,
+  SEEK,
   INIT,
   DESTROY,
   onPlay,
   onPause,
+  onTimeUpdate
 } from '../redux/actions';
 import { State as VideoState } from '../redux/reducer';
 
@@ -30,6 +32,10 @@ const attachEvents = (
   instance.addEventListener('pause', () => {
     dispatch(onPause(id));
   });
+
+  instance.addEventListener('timeupdate', () => {
+    dispatch(onTimeUpdate(id, instance.currentTime));
+  });
 };
 
 const videoMiddleware = (): Middleware<{}, State> => {
@@ -50,6 +56,9 @@ const videoMiddleware = (): Middleware<{}, State> => {
         break;
       case PAUSE:
         instanceMap[action.meta.id].pause();
+        break;
+      case SEEK:
+        instanceMap[action.meta.id].currentTime = action.payload.to;
         break;
     }
 
